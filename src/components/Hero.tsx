@@ -28,7 +28,7 @@ const HeroCont = styled.section`
 
     .hero__title {
         text-align: center;
-        font-size: 8rem;
+
         color: ${colors.light};
         font-family: "ubantu";
         margin-bottom: 0;
@@ -36,7 +36,6 @@ const HeroCont = styled.section`
 
     .hero__subtitle {
         text-align: center;
-        font-size: 3rem;
         color: ${colors.light};
         font-family: "ubantu";
     }

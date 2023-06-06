@@ -23,6 +23,23 @@ export const GlobalStyles = createGlobalStyle`
     text-decoration: none;
   }
 
+  h1 {
+    font-size: 10rem;
+
+  }
+  h2 {
+    font-size: 5rem;
+   
+  }
+
+  h3 {
+    font-size: 6rem;
+
+  }
+
+  p {
+    font-size: 2.4rem;
+  }
 
 
 `;
