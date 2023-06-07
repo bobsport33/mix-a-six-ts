@@ -53,9 +53,7 @@ interface Data {
 }
 
 const ProductCard = ({ data }: Data) => {
-    const clickHandler = (e: MouseEvent) => {
-        console.log(e);
-    };
+    const clickHandler = () => {};
     return (
         <ProdCardCont>
             <h4 className="card__title">
