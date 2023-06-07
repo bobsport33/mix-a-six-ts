@@ -2,8 +2,17 @@ import Head from "next/head";
 import Header from "../components/Header";
 import Hero from "@/components/Hero";
 import Products from "@/components/Products";
+import { useEffect } from "react";
 
 export default function Home() {
+    let beers;
+    useEffect(() => {
+        (async () => {
+            const data = await fetch("/api/beer");
+            beers = await data.json();
+            console.log(beers);
+        })();
+    }, []);
     return (
         <>
             <Head>
