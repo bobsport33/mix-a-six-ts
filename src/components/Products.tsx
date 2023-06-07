@@ -36,7 +36,7 @@ const Products = () => {
             </p>
             <div className="products__grid">
                 {data.map((beer) => {
-                    return <ProductCard data={beer} />;
+                    return <ProductCard key={beer.id} data={beer} />;
                 })}
             </div>
         </ProductsCont>
