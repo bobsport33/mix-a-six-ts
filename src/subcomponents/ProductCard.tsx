@@ -19,6 +19,7 @@ const ProdCardCont = styled.div`
 
     .card__title {
         font-size: 3rem;
+        text-align: center;
     }
 
     .card__image {

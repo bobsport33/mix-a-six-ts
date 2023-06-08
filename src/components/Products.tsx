@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
 import ProductCard from "@/subcomponents/ProductCard";
@@ -42,8 +42,17 @@ interface Data {
 }
 
 const Products = ({ data }: Data) => {
-    const { beer: Beers, styles: Styles } = data;
-    console.log(data.beer);
+    const beers = data.beer.map((b) => {
+        const styleName: Style = data.styles.find(
+            (style) => style.id === b.styleId
+        )!;
+        if (styleName) {
+            b.styleId = styleName.name;
+        }
+
+        return b;
+    });
+
     return (
         <ProductsCont>
             <h3 className="products__heading">Available Beers</h3>
@@ -55,7 +64,7 @@ const Products = ({ data }: Data) => {
                 <h4 className="products__filters--heading">Filters</h4>
             </div>
             <div className="products__grid">
-                {data.beer.map((b: Beer) => {
+                {beers.map((b: Beer) => {
                     return <ProductCard key={b.beerId} data={b} />;
                 })}
             </div>
