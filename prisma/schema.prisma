@@ -14,17 +14,17 @@ datasource db {
 }
 
 model Styles {
-  id Int @id @default(autoincrement())
+  id String  @id @default(uuid())
   name String @unique
   beers Beer[]
 }
 
 model Beer {
-  id Int @id @default(autoincrement())
+  beerId String  @id @default(uuid())
   brewery String 
-  name String @unique
+  name String
   img String 
-  style Styles @relation(fields: [id], references: [id])
-  styleId Int
-  price Int
+  style Styles @relation(fields: [styleId], references: [id])
+  styleId String
+  price Float
 }

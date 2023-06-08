@@ -3,16 +3,28 @@ import Header from "../components/Header";
 import Hero from "@/components/Hero";
 import Products from "@/components/Products";
 import { useEffect } from "react";
+import { prisma } from "@/utlis/db";
+import { StringLiteral } from "typescript";
 
-export default function Home() {
-    let beers;
-    useEffect(() => {
-        (async () => {
-            const data = await fetch("/api/beer");
-            beers = await data.json();
-            console.log(beers);
-        })();
-    }, []);
+interface Beer {
+    beerId: string;
+    brewery: string;
+    img: string;
+    name: string;
+    price: number;
+    styleId: string;
+}
+
+interface Style {
+    id: string;
+    name: string;
+}
+
+interface Data {
+    data: { beer: Beer[]; styles: Style[] };
+}
+
+export default function Home({ data }: Data) {
     return (
         <>
             <Head>
@@ -30,8 +42,15 @@ export default function Home() {
             <main>
                 <Header />
                 <Hero />
-                <Products />
+                <Products data={data} />
             </main>
         </>
     );
+}
+
+export async function getStaticProps() {
+    const beer = await prisma.beer.findMany();
+    const styles = await prisma.styles.findMany();
+
+    return { props: { data: { beer, styles } } };
 }

@@ -41,14 +41,12 @@ const ProdCardCont = styled.div`
 
 interface Data {
     data: {
-        id: number;
+        beerId: string;
         brewery: string;
+        img: string;
         name: string;
-        imageUrl: string;
-        imageAlt: string;
-        description: string;
-        style: string;
         price: number;
+        styleId: string;
     };
 }
 
@@ -60,13 +58,13 @@ const ProductCard = ({ data }: Data) => {
                 {data.brewery} {data.name}
             </h4>
             <img
-                src={data.imageUrl}
-                alt={data.imageAlt}
+                src={data.img}
+                alt="can or bottle of beer"
                 className="card__image"
             />
-            <p className="card__description">{data.description}</p>
+
             <div className="card__row">
-                <p className="card__style">Style: {data.style}</p>
+                <p className="card__style">Style: {data.styleId}</p>
                 <p className="card__price">Price: ${data.price}</p>
                 <Button text="+" onClick={clickHandler} />
             </div>
