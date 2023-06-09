@@ -13,7 +13,7 @@ interface Id {
     id: string;
 }
 interface Context {
-    items: Item[] | never[];
+    items: Item[];
     totalAmount: number;
     totalBeers: number;
     addItem: (item: Item) => void;
