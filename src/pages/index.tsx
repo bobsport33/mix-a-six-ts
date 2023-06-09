@@ -2,9 +2,8 @@ import Head from "next/head";
 import Header from "../components/Header";
 import Hero from "@/components/Hero";
 import Products from "@/components/Products";
-import { useEffect } from "react";
+import Cart from "@/components/Cart";
 import { prisma } from "@/utlis/db";
-import { StringLiteral } from "typescript";
 
 interface Beer {
     beerId: string;
@@ -43,6 +42,7 @@ export default function Home({ data }: Data) {
                 <Header />
                 <Hero />
                 <Products data={data} />
+                <Cart />
             </main>
         </>
     );

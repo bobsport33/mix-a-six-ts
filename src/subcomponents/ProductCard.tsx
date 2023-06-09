@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import CartContext from "@/store/cart-context";
 import Button from "./Button";
 import styled from "styled-components";
 import { colors } from "@/styles/variables";
@@ -52,7 +53,11 @@ interface Data {
 }
 
 const ProductCard = ({ data }: Data) => {
-    const clickHandler = () => {};
+    const cartCtx = useContext(CartContext);
+    const clickHandler = () => {
+        console.log("click");
+        cartCtx.addItem(data);
+    };
     return (
         <ProdCardCont>
             <h4 className="card__title">

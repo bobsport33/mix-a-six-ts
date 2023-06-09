@@ -22,6 +22,12 @@ const ProductsCont = styled.section`
         grid-template-columns: repeat(3, 1fr);
         gap: 30px;
     }
+
+    .products__filters {
+        background-color: ${colors.grey2};
+        display: flex;
+        gap: 25px;
+    }
 `;
 
 interface Beer {
@@ -62,6 +68,13 @@ const Products = ({ data }: Data) => {
             </p>
             <div className="products__filters">
                 <h4 className="products__filters--heading">Filters</h4>
+                {data.styles.map((style) => {
+                    return (
+                        <div key={style.name} className="product__filter">
+                            <p>{style.name}</p>
+                        </div>
+                    );
+                })}
             </div>
             <div className="products__grid">
                 {beers.map((b: Beer) => {
