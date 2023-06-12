@@ -4,6 +4,22 @@ import Hero from "@/components/Hero";
 import Products from "@/components/Products";
 import Cart from "@/components/Cart";
 import { prisma } from "@/utlis/db";
+import { useState } from "react";
+import styled, { css } from "styled-components";
+
+const HomeCont = styled.main<Styles>`
+    ${({ $modalOpen }) => {
+        if ($modalOpen) {
+            return css`
+                overflow: hidden;
+            `;
+        }
+    }}
+`;
+
+interface Styles {
+    $modalOpen: boolean;
+}
 
 interface Beer {
     beerId: string;
@@ -24,6 +40,12 @@ interface Data {
 }
 
 export default function Home({ data }: Data) {
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const modalHandler = () => {
+        setModalOpen(!modalOpen);
+    };
+
     return (
         <>
             <Head>
@@ -38,12 +60,12 @@ export default function Home({ data }: Data) {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main>
-                <Header />
+            <HomeCont $modalOpen={modalOpen}>
+                <Header onClick={modalHandler} />
                 <Hero />
                 <Products data={data} />
-                <Cart />
-            </main>
+                {modalOpen && <Cart onClick={modalHandler} />}
+            </HomeCont>
         </>
     );
 }

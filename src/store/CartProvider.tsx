@@ -47,10 +47,7 @@ interface Context {
 }
 
 const cartReducer = (state: any, action: any) => {
-    console.log(state);
-    console.log(action);
     if (action.type === "ADD") {
-        console.log("ADD ITEM!!!");
         const updatedTotalBeers = state.totalBeers + 1;
         const updatedTotalAmount = state.totalAmount + action.item.price;
 
@@ -122,7 +119,6 @@ const CartProvider = (props: any) => {
     const [cartState, cartDispatch] = useReducer(cartReducer, defaultCartState);
 
     const addItemHandler = (item: Item) => {
-        console.log(item);
         cartDispatch({ type: "ADD", item: item });
     };
 
