@@ -29,6 +29,10 @@ const CartCont = styled.div`
 
     .cart__list {
         overflow-y: scroll;
+        max-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
 `;
 interface Cart {

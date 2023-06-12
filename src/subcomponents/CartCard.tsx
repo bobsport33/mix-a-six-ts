@@ -1,18 +1,8 @@
 import Image from "next/image";
-import React from "react";
+import React, { useContext, MouseEvent } from "react";
 import styled from "styled-components";
-
-const CartCardCont = styled.div`
-    .card__btn {
-        border: 1px solid var(--color-primary);
-        background-color: var(--color-grey);
-        border-radius: 50px;
-        margin-left: 0.5rem;
-        width: 1.5rem;
-        height: 1.5rem;
-        transition: all 0.1s;
-    }
-`;
+import { colors } from "@/styles/variables";
+import CartContext from "@/store/cart-context";
 
 interface Item {
     item: {
@@ -25,21 +15,83 @@ interface Item {
     };
 }
 
+const CartCardCont = styled.div`
+    display: flex;
+    justify-content: space-between;
+
+    .card__left {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .card__right {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .card__title {
+        font-size: 2rem;
+    }
+
+    .card__img {
+        max-height: 200px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .card__btn-cont {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+    .card__btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid ${colors.primary};
+        background-color: ${colors.grey};
+        border-radius: 50px;
+        width: 30px;
+        height: 30px;
+        transition: all 0.1s;
+        font-size: 2rem;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+`;
+
 const CartCard = ({ item }: Item) => {
-    console.log(item);
+    const cartCtx = useContext(CartContext);
+
+    const addItemHandler = (e: MouseEvent<HTMLButtonElement>) => {
+        cartCtx.addItem(item);
+    };
+    const removeItemHandler = (e: MouseEvent<HTMLButtonElement>) => {
+        cartCtx.removeItem(item.beerId);
+    };
     return (
         <CartCardCont>
-            <h5 className="card__title">
-                {item.brewery} {item.name}
-            </h5>
-
-            <img className="card__img" src={item.img} alt={"beer label"} />
-            <div className="card__quantities">
+            <div className="card__left">
+                <h5 className="card__title">
+                    {item.brewery} {item.name}
+                </h5>
+                <img className="card__img" src={item.img} alt={"beer label"} />
+            </div>
+            <div className="card__right">
                 <p className="card__amount">Quantity: </p>
                 <p className="card__price">${item.price.toFixed(2)} each</p>
                 <p className="card__total">Total: $</p>
-                <button className="card__btn">+</button>
-                <button className="card__btn">-</button>
+                <div className="card__btn-cont">
+                    <button className="card__btn" onClick={addItemHandler}>
+                        +
+                    </button>
+                    <button className="card__btn" onClick={removeItemHandler}>
+                        -
+                    </button>
+                </div>
             </div>
         </CartCardCont>
     );

@@ -51,9 +51,11 @@ const cartReducer = (state: any, action: any) => {
         const updatedTotalBeers = state.totalBeers + 1;
         const updatedTotalAmount = state.totalAmount + action.item.price;
 
-        const existingCartItemIndex = state.items.findIndex(
-            (item: Item) => item.beerId === action.item.id
-        );
+        const existingCartItemIndex = state.items.findIndex((item: Item) => {
+            console.log(item.beerId);
+            console.log(action);
+            return item.beerId === action.item.beerId;
+        });
 
         const existingCartItem = state.items[existingCartItemIndex];
 
