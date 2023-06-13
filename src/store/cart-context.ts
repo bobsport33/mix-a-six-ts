@@ -1,6 +1,7 @@
 import { createContext } from "react";
 
 interface Item {
+    amount: number;
     beerId: string;
     brewery: string;
     img: string;
@@ -17,7 +18,7 @@ interface Context {
     totalAmount: number;
     totalBeers: number;
     addItem: (item: Item) => void;
-    removeItem: (id: Id) => void;
+    removeItem: (item: Item) => void;
     clearCart: () => void;
 }
 
@@ -26,7 +27,7 @@ const CartContext = createContext<Context>({
     totalAmount: 0,
     totalBeers: 0,
     addItem: (item: Item) => {},
-    removeItem: (id: Id) => {},
+    removeItem: (item: Item) => {},
     clearCart: () => {},
 });
 

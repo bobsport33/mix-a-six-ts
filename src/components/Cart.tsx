@@ -16,8 +16,7 @@ const CartCont = styled.div`
     .cart__modal {
         position: fixed;
         top: 15vh;
-        min-height: 60vh;
-        max-height: 80vh;
+        height: 80vh;
         left: 10%;
         width: 80%;
         background-color: white;
@@ -25,6 +24,9 @@ const CartCont = styled.div`
         border-radius: 1rem;
         box-shadow: 0, 0.5rem 2rem rgba(0, 0, 0, 0.8);
         z-index: 30;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .cart__list {
@@ -34,6 +36,21 @@ const CartCont = styled.div`
         flex-direction: column;
         gap: 15px;
     }
+
+    .cart__checkout {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .cart__section {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+    }
 `;
 interface Cart {
     onClick: () => void;
@@ -42,9 +59,14 @@ interface Cart {
 const Cart = ({ onClick }: Cart) => {
     const cartCtx = useContext(CartContext);
     const [canCheckout, setCanCheckout] = useState(false);
+    const [itemInCart, setItemInCart] = useState(false);
 
     useEffect(() => {
+        if (cartCtx.totalBeers > 0) {
+            setItemInCart(true);
+        }
         if (cartCtx.totalBeers === 0) {
+            setItemInCart(false);
             return;
         }
         if (cartCtx.totalBeers % 6 === 0) {
@@ -71,18 +93,34 @@ const Cart = ({ onClick }: Cart) => {
                         return <CartCard key={item.beerId} item={item} />;
                     })}
                 </div>
-                <h5 className="cart__beers">
-                    Number of Beers: {cartCtx.totalBeers}
-                </h5>
-                <h5 className="cart__price">
-                    Total Price: ${cartCtx.totalAmount}
-                </h5>
-                <div className="cart__checkout"></div>
-                <Button text="Close" onClick={onClick} />
-                {canCheckout && (
-                    <Button text="Checkout" onClick={checkoutHandler} />
-                )}
-                {!canCheckout && <p>Must have increments of 6 to checkout</p>}
+                <div className="cart__details">
+                    <h5 className="cart__beers">
+                        Number of Beers: {cartCtx.totalBeers}
+                    </h5>
+                    <h5 className="cart__price">
+                        Total Price: ${cartCtx.totalAmount}
+                    </h5>
+                    <div className="cart__checkout">
+                        <div className="cart__section">
+                            <Button text="Close" onClick={onClick} />
+                            {canCheckout && (
+                                <Button
+                                    text="Checkout"
+                                    onClick={checkoutHandler}
+                                />
+                            )}
+                            {!canCheckout && (
+                                <p>*Must have increments of 6 to checkout</p>
+                            )}
+                        </div>
+                        {itemInCart && (
+                            <Button
+                                text="Clear Cart"
+                                onClick={cartCtx.clearCart}
+                            />
+                        )}
+                    </div>
+                </div>
             </div>
         </CartCont>
     );

@@ -13,6 +13,7 @@ interface CartAction {
 }
 
 interface Item {
+    amount: number;
     beerId: string;
     brewery: string;
     img: string;
@@ -42,7 +43,7 @@ interface Context {
     totalAmount: number;
     totalBeers: number;
     addItem: (item: Item) => void;
-    removeItem: (id: Id) => void;
+    removeItem: (item: Item) => void;
     clearCart: () => void;
 }
 
@@ -52,8 +53,6 @@ const cartReducer = (state: any, action: any) => {
         const updatedTotalAmount = state.totalAmount + action.item.price;
 
         const existingCartItemIndex = state.items.findIndex((item: Item) => {
-            console.log(item.beerId);
-            console.log(action);
             return item.beerId === action.item.beerId;
         });
 
@@ -81,9 +80,9 @@ const cartReducer = (state: any, action: any) => {
         };
     }
     if (action.type === "REMOVE") {
-        const existingCartItemIndex = state.items.findIndex(
-            (item: Item) => item.beerId === action.id
-        );
+        const existingCartItemIndex = state.items.findIndex((item: Item) => {
+            return item.beerId === action.item.beerId;
+        });
 
         const existingCartItem = state.items[existingCartItemIndex];
 
@@ -95,7 +94,7 @@ const cartReducer = (state: any, action: any) => {
 
         if (existingCartItem.amount === 1) {
             updatedItems = state.items.filter(
-                (item: Item) => item.beerId !== action.id
+                (item: Item) => item.beerId !== action.item.beerId
             );
         } else {
             const updatedItem = {
@@ -124,8 +123,8 @@ const CartProvider = (props: any) => {
         cartDispatch({ type: "ADD", item: item });
     };
 
-    const removeItemHandler = (id: Id) => {
-        cartDispatch({ type: "REMOVE", id: id });
+    const removeItemHandler = (item: Item) => {
+        cartDispatch({ type: "REMOVE", item: item });
     };
     const clearCartHandler = () => {
         cartDispatch({ type: "CLEAR" });

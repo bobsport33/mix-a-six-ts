@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { colors } from "@/styles/variables";
+import CSS from "csstype";
 
 const BtnCont = styled.button`
     background-color: ${colors.primary};
