@@ -6,7 +6,7 @@ import CartContext from "@/store/cart-context";
 
 interface Item {
     item: {
-        amount: number;
+        amount?: number;
         beerId: string;
         brewery: string;
         img: string;
@@ -84,9 +84,11 @@ const CartCard = ({ item }: Item) => {
             <div className="card__right">
                 <p className="card__amount">Quantity: {item.amount}</p>
                 <p className="card__price">${item.price.toFixed(2)} each</p>
-                <p className="card__total">
-                    Total: ${(item.amount * item.price).toFixed(2)}
-                </p>
+                {item.amount && (
+                    <p className="card__total">
+                        Total: ${(item.amount * item.price).toFixed(2)}
+                    </p>
+                )}
                 <div className="card__btn-cont">
                     <button className="card__btn" onClick={addItemHandler}>
                         +
