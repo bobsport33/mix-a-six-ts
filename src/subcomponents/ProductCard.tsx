@@ -43,6 +43,7 @@ const ProdCardCont = styled.div`
 
 interface Data {
     data: {
+        amount: number;
         beerId: string;
         brewery: string;
         img: string;
