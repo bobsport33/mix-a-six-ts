@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { colors } from "../styles/variables";
 import ProductCard from "@/subcomponents/ProductCard";
@@ -24,9 +24,47 @@ const ProductsCont = styled.section`
     }
 
     .products__filters {
+        padding: 20px;
+        width: 90%;
+        border-radius: 20px;
         background-color: ${colors.grey2};
         display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .products__filter-container {
+        display: flex;
         gap: 25px;
+    }
+
+    .products__checkbox {
+        display: none;
+
+        &:checked + .products__filter {
+            &::before {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z'/%3E%3C/svg%3E");
+            }
+        }
+    }
+
+    .products__filter {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 2.4rem;
+
+        &::before {
+            content: "";
+            display: block;
+            height: 20px;
+            width: 20px;
+            background-color: ${colors.grey};
+        }
+        &:hover {
+            cursor: pointer;
+        }
     }
 `;
 
@@ -48,6 +86,8 @@ interface Data {
 }
 
 const Products = ({ data }: Data) => {
+    const filters = useRef();
+
     const beers = data.beer.map((b) => {
         const styleName: Style = data.styles.find(
             (style) => style.id === b.styleId
@@ -59,6 +99,16 @@ const Products = ({ data }: Data) => {
         return b;
     });
 
+    const filterHandler = (e: React.FormEvent<HTMLInputElement>) => {
+        // console.log(e.target);
+        // Update checked state
+        // if (filters.current) {
+        //     console.log(filters.current.children);
+        // }
+        // Check all filters to see which are checked
+        // conditionally render output based off of filters
+    };
+
     return (
         <ProductsCont>
             <h3 className="products__heading">Available Beers</h3>
@@ -68,13 +118,26 @@ const Products = ({ data }: Data) => {
             </p>
             <div className="products__filters">
                 <h4 className="products__filters--heading">Filters</h4>
-                {data.styles.map((style) => {
-                    return (
-                        <div key={style.name} className="product__filter">
-                            <p>{style.name}</p>
-                        </div>
-                    );
-                })}
+                <div className="products__filter-container" ref={filters}>
+                    {data.styles.map((style) => {
+                        return (
+                            <React.Fragment key={style.name}>
+                                <input
+                                    id={style.name}
+                                    type="checkbox"
+                                    className="products__checkbox"
+                                    onChange={filterHandler}
+                                />
+                                <label
+                                    className="products__filter"
+                                    htmlFor={style.name}
+                                >
+                                    {style.name}
+                                </label>
+                            </React.Fragment>
+                        );
+                    })}
+                </div>
             </div>
             <div className="products__grid">
                 {beers.map((b: Beer) => {

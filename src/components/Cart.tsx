@@ -98,7 +98,7 @@ const Cart = ({ onClick }: Cart) => {
                         Number of Beers: {cartCtx.totalBeers}
                     </h5>
                     <h5 className="cart__price">
-                        Total Price: ${cartCtx.totalAmount}
+                        Total Price: ${cartCtx.totalAmount.toFixed(2)}
                     </h5>
                     <div className="cart__checkout">
                         <div className="cart__section">
