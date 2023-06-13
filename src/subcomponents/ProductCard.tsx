@@ -43,7 +43,7 @@ const ProdCardCont = styled.div`
 
 interface Data {
     data: {
-        amount: number;
+        amount?: number;
         beerId: string;
         brewery: string;
         img: string;
@@ -56,7 +56,6 @@ interface Data {
 const ProductCard = ({ data }: Data) => {
     const cartCtx = useContext(CartContext);
     const clickHandler = () => {
-        console.log("click");
         cartCtx.addItem(data);
     };
     return (

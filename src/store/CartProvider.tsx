@@ -13,7 +13,7 @@ interface CartAction {
 }
 
 interface Item {
-    amount: number;
+    amount?: number;
     beerId: string;
     brewery: string;
     img: string;
