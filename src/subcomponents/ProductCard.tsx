@@ -13,6 +13,7 @@ const ProdCardCont = styled.div`
     border-radius: 1rem;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
     align-items: center;
     gap: 15px;

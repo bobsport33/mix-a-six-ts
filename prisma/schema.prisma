@@ -8,9 +8,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+  url = env("DATABASE_URL") 
 }
 
 model Styles {
@@ -27,4 +25,18 @@ model Beer {
   style Styles @relation(fields: [styleId], references: [id])
   styleId String
   price Float
+  order Orders[]
+}
+
+model User {
+  id String @id @default(uuid())
+  username String @unique
+  password String 
+}
+
+model Orders {
+  id String @id @default(uuid())
+  beer Beer @relation(fields: [productId], references: [beerId])
+  productId String
+  quantity Int 
 }

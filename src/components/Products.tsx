@@ -21,6 +21,7 @@ const ProductsCont = styled.section`
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 30px;
+        max-width: 1250px;
     }
 
     .products__filters {
@@ -118,7 +119,7 @@ const Products = ({ data }: Data) => {
             </p>
             <div className="products__filters">
                 <h4 className="products__filters--heading">Filters</h4>
-                <div className="products__filter-container" ref={filters}>
+                <div className="products__filter-container">
                     {data.styles.map((style) => {
                         return (
                             <React.Fragment key={style.name}>
