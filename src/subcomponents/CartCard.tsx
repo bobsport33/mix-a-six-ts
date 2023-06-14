@@ -22,6 +22,7 @@ const CartCardCont = styled.div`
 
     .card__left {
         display: flex;
+        align-items: start;
         flex-direction: column;
         gap: 10px;
     }
@@ -37,7 +38,7 @@ const CartCardCont = styled.div`
     }
 
     .card__img {
-        max-height: 200px;
+        max-height: 125px;
         width: auto;
         object-fit: contain;
     }
