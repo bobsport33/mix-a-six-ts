@@ -1,6 +1,12 @@
 import CartContext from "@/store/cart-context";
 import Button from "@/subcomponents/Button";
-import React, { MouseEvent, useContext, useState, useEffect } from "react";
+import React, {
+    MouseEvent,
+    useContext,
+    useState,
+    useEffect,
+    useRef,
+} from "react";
 import CartCard from "@/subcomponents/CartCard";
 
 import styled from "styled-components";
@@ -51,15 +57,29 @@ const CartCont = styled.div`
         gap: 10px;
         align-items: center;
     }
+
+    .cart__checkout {
+        display: flex;
+        flex-direction: column;
+    }
 `;
 interface Cart {
     onClick: () => void;
+}
+interface FormInput {
+    firstName?: String;
+    lastName?: String;
+    creditCardNumber?: String;
+    exp?: String;
+    pin?: Number;
 }
 
 const Cart = ({ onClick }: Cart) => {
     const cartCtx = useContext(CartContext);
     const [canCheckout, setCanCheckout] = useState(false);
     const [itemInCart, setItemInCart] = useState(false);
+    const [checkingOut, setCheckingOut] = useState(false);
+    const formInputRef = useRef<FormInput>({});
 
     useEffect(() => {
         if (cartCtx.totalBeers > 0) {
@@ -82,45 +102,120 @@ const Cart = ({ onClick }: Cart) => {
         }
     };
 
-    const checkoutHandler = () => {};
+    const checkoutHandler = () => {
+        setCheckingOut(true);
+    };
 
     return (
         <CartCont id={"cart__cont"} onClick={backgroundClickHandler}>
             <div className="cart__modal">
-                <h4 className="cart__header">Shopping Cart</h4>
-                <div className="cart__list">
-                    {cartCtx.items.map((item) => {
-                        return <CartCard key={item.beerId} item={item} />;
-                    })}
-                </div>
-                <div className="cart__details">
-                    <h5 className="cart__beers">
-                        Number of Beers: {cartCtx.totalBeers}
-                    </h5>
-                    <h5 className="cart__price">
-                        Total Price: ${cartCtx.totalAmount.toFixed(2)}
-                    </h5>
-                    <div className="cart__checkout">
-                        <div className="cart__section">
-                            <Button text="Close" onClick={onClick} />
-                            {canCheckout && (
-                                <Button
-                                    text="Checkout"
-                                    onClick={checkoutHandler}
-                                />
-                            )}
-                            {!canCheckout && (
-                                <p>*Must have increments of 6 to checkout</p>
-                            )}
+                {!checkingOut && (
+                    <>
+                        <h4 className="cart__header">Shopping Cart</h4>
+                        <div className="cart__list">
+                            {cartCtx.items.map((item) => {
+                                return (
+                                    <CartCard key={item.beerId} item={item} />
+                                );
+                            })}
                         </div>
-                        {itemInCart && (
-                            <Button
-                                text="Clear Cart"
-                                onClick={cartCtx.clearCart}
-                            />
-                        )}
+                        <div className="cart__details">
+                            <h5 className="cart__beers">
+                                Number of Beers: {cartCtx.totalBeers}
+                            </h5>
+                            <h5 className="cart__price">
+                                Total Price: ${cartCtx.totalAmount.toFixed(2)}
+                            </h5>
+                            <div className="cart__checkout">
+                                <div className="cart__section">
+                                    <Button text="Close" onClick={onClick} />
+                                    {canCheckout && (
+                                        <Button
+                                            text="Checkout"
+                                            onClick={checkoutHandler}
+                                        />
+                                    )}
+                                    {!canCheckout && (
+                                        <p>
+                                            *Must have increments of 6 to
+                                            checkout
+                                        </p>
+                                    )}
+                                </div>
+                                {itemInCart && (
+                                    <Button
+                                        text="Clear Cart"
+                                        onClick={cartCtx.clearCart}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                    </>
+                )}
+                {checkingOut && (
+                    <div className="cart__checkout">
+                        <Button
+                            text="Back"
+                            onClick={() => {
+                                setCheckingOut(false);
+                            }}
+                        />
+                        <div className="cart__details">
+                            <div className="cart__checkout">
+                                <form action="" className="cart__form">
+                                    <div className="cart__form--section">
+                                        <label htmlFor="first_name">
+                                            First Name
+                                        </label>
+                                        <input
+                                            id="first_name"
+                                            type="text"
+                                            ref={(ref) =>
+                                                (formInputRef.current.firstName =
+                                                    ref?.value ?? " ")
+                                            }
+                                        />
+                                    </div>
+                                    <div className="cart__form--section">
+                                        <label htmlFor="last_name">
+                                            Last Name
+                                        </label>
+                                        <input id="last_name" type="text" />
+                                    </div>
+                                    <div className="cart__form--section">
+                                        <label htmlFor="credit_card">
+                                            Credit Card
+                                        </label>
+                                        <input id="credit_card" type="text" />
+                                    </div>
+                                    <div className="cart__form--section">
+                                        <label htmlFor="exp">Exp</label>
+                                        <input id="exp" type="text" />
+                                    </div>
+                                    <div className="cart__form--section">
+                                        <label htmlFor="pin">Pin</label>
+                                        <input id="pin" type="text" />
+                                    </div>
+                                    <h5 className="cart__beers">
+                                        Number of Beers: {cartCtx.totalBeers}
+                                    </h5>
+                                    <h5 className="cart__price">
+                                        Total Price: $
+                                        {cartCtx.totalAmount.toFixed(2)}
+                                    </h5>
+                                    <div className="cart__section">
+                                        {canCheckout && (
+                                            <Button
+                                                text="Submit"
+                                                onClick={checkoutHandler}
+                                            />
+                                        )}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </CartCont>
     );
