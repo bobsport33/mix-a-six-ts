@@ -72,7 +72,7 @@ const ProductCard = ({ data }: Data) => {
 
             <div className="card__row">
                 <p className="card__style">Style: {data.styleId}</p>
-                <p className="card__price">Price: ${data.price}</p>
+                <p className="card__price">Price: ${data.price.toFixed(2)}</p>
                 <Button text="+" onClick={clickHandler} />
             </div>
         </ProdCardCont>

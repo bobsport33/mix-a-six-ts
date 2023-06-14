@@ -26,7 +26,7 @@ const ProductsCont = styled.section`
 
     .products__filters {
         padding: 20px;
-        width: 90%;
+        max-width: 90%;
         border-radius: 20px;
         background-color: ${colors.grey2};
         display: flex;
@@ -87,7 +87,8 @@ interface Data {
 }
 
 const Products = ({ data }: Data) => {
-    const filters = useRef();
+    const filterCont = useRef<HTMLDivElement>(null);
+    const [filters, setFilters] = useState<String[]>([]);
 
     const beers = data.beer.map((b) => {
         const styleName: Style = data.styles.find(
@@ -100,14 +101,16 @@ const Products = ({ data }: Data) => {
         return b;
     });
 
-    const filterHandler = (e: React.FormEvent<HTMLInputElement>) => {
-        // console.log(e.target);
-        // Update checked state
-        // if (filters.current) {
-        //     console.log(filters.current.children);
-        // }
-        // Check all filters to see which are checked
-        // conditionally render output based off of filters
+    const filterHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.checked) {
+            const newFilter = [...filters, e.target.id];
+            setFilters(newFilter);
+        } else {
+            const newFilter = filters.filter((filter) => {
+                return filter !== e.target.id;
+            });
+            setFilters(newFilter);
+        }
     };
 
     return (
@@ -119,7 +122,7 @@ const Products = ({ data }: Data) => {
             </p>
             <div className="products__filters">
                 <h4 className="products__filters--heading">Filters</h4>
-                <div className="products__filter-container">
+                <div className="products__filter-container" ref={filterCont}>
                     {data.styles.map((style) => {
                         return (
                             <React.Fragment key={style.name}>
@@ -142,7 +145,11 @@ const Products = ({ data }: Data) => {
             </div>
             <div className="products__grid">
                 {beers.map((b: Beer) => {
-                    return <ProductCard key={b.beerId} data={b} />;
+                    if (filters.length === 0) {
+                        return <ProductCard key={b.beerId} data={b} />;
+                    } else if (filters.includes(b.styleId)) {
+                        return <ProductCard key={b.beerId} data={b} />;
+                    }
                 })}
             </div>
         </ProductsCont>
