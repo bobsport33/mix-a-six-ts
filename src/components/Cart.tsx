@@ -13,18 +13,19 @@ import styled from "styled-components";
 
 const CartCont = styled.div`
     position: fixed;
-    top: 0;
-    height: 100vh;
+    bottom: 0;
+    height: calc(100vh - 110px);
     width: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     font-size: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .cart__modal {
-        position: fixed;
-        top: 15vh;
-        height: 80vh;
-        left: 10%;
-        width: 80%;
+        max-height: 90%;
+        width: fit-content;
+        min-width: 50%;
         background-color: white;
         padding: 1rem;
         border-radius: 1rem;
@@ -33,11 +34,12 @@ const CartCont = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        gap: 30px;
     }
 
     .cart__list {
         overflow-y: scroll;
-        max-height: 50vh;
+        max-height: 50%;
         display: flex;
         flex-direction: column;
         gap: 15px;
@@ -61,6 +63,7 @@ const CartCont = styled.div`
     .cart__checking-out {
         display: flex;
         flex-direction: column;
+        gap: 15px;
     }
 
     .cart__form {
