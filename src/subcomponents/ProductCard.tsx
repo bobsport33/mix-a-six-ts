@@ -11,7 +11,7 @@ const ProdCardCont = styled.div`
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 15px;
     padding: 15px;
 
@@ -51,24 +51,20 @@ const ProdCardCont = styled.div`
 
     .card__title {
         font-size: 3rem;
-        text-align: center;
+        text-align: left;
     }
 
     .card__image {
         height: 200px;
-    }
-
-    .card__description {
-        text-align: center;
-        font-size: 2rem;
+        align-self: center;
     }
 
     .card__row {
         width: 100%;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
     }
 `;
 
