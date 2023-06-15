@@ -58,9 +58,39 @@ const CartCont = styled.div`
         align-items: center;
     }
 
-    .cart__checkout {
+    .cart__checking-out {
         display: flex;
         flex-direction: column;
+    }
+
+    .cart__form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .cart__form--section {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+        }
+        input {
+            height: 30px;
+        }
+    }
+
+    .cart__form--small-section {
+        display: flex;
+        gap: 20px;
+
+        /* input {
+            width: 40%;
+        } */
+    }
+    .cart__back-btn {
     }
 `;
 interface Cart {
@@ -153,13 +183,15 @@ const Cart = ({ onClick }: Cart) => {
                     </>
                 )}
                 {checkingOut && (
-                    <div className="cart__checkout">
-                        <Button
-                            text="Back"
-                            onClick={() => {
-                                setCheckingOut(false);
-                            }}
-                        />
+                    <div className="cart__checking-out">
+                        <div className="cart__back-btn">
+                            <Button
+                                text="Back"
+                                onClick={() => {
+                                    setCheckingOut(false);
+                                }}
+                            />
+                        </div>
                         <div className="cart__details">
                             <div className="cart__checkout">
                                 <form action="" className="cart__form">
@@ -188,13 +220,15 @@ const Cart = ({ onClick }: Cart) => {
                                         </label>
                                         <input id="credit_card" type="text" />
                                     </div>
-                                    <div className="cart__form--section">
-                                        <label htmlFor="exp">Exp</label>
-                                        <input id="exp" type="text" />
-                                    </div>
-                                    <div className="cart__form--section">
-                                        <label htmlFor="pin">Pin</label>
-                                        <input id="pin" type="text" />
+                                    <div className="cart__form--small-section">
+                                        <div className="cart__form--section">
+                                            <label htmlFor="exp">Exp</label>
+                                            <input id="exp" type="text" />
+                                        </div>
+                                        <div className="cart__form--section">
+                                            <label htmlFor="pin">Pin</label>
+                                            <input id="pin" type="text" />
+                                        </div>
                                     </div>
                                     <h5 className="cart__beers">
                                         Number of Beers: {cartCtx.totalBeers}
