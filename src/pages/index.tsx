@@ -5,17 +5,6 @@ import Products from "@/components/Products";
 import Cart from "@/components/Cart";
 import { prisma } from "@/utlis/db";
 import { useState } from "react";
-import styled, { css } from "styled-components";
-
-const HomeCont = styled.main<Styles>`
-    ${({ $modalOpen }) => {
-        if ($modalOpen) {
-            return css`
-                overflow: hidden;
-            `;
-        }
-    }}
-`;
 
 interface Styles {
     $modalOpen: boolean;
@@ -43,6 +32,14 @@ export default function Home({ data }: Data) {
     const [modalOpen, setModalOpen] = useState(false);
 
     const modalHandler = () => {
+        const htmlElement = document.getElementsByTagName("html")[0];
+
+        if (!modalOpen) {
+            htmlElement.style.overflow = "hidden";
+        } else {
+            htmlElement.style.overflow = "";
+        }
+
         setModalOpen(!modalOpen);
     };
 
@@ -60,12 +57,12 @@ export default function Home({ data }: Data) {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <HomeCont $modalOpen={modalOpen}>
+            <main>
                 <Header onClick={modalHandler} />
                 <Hero />
                 <Products data={data} />
                 {modalOpen && <Cart onClick={modalHandler} />}
-            </HomeCont>
+            </main>
         </>
     );
 }

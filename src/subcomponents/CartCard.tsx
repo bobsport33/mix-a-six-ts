@@ -18,18 +18,23 @@ interface Item {
 
 const CartCardCont = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    gap: 20px;
+    padding: 20px 0;
 
     .card__left {
         display: flex;
-        align-items: start;
-        flex-direction: column;
+        align-items: center;
+        flex-direction: row;
         gap: 10px;
     }
 
     .card__right {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
         gap: 10px;
     }
 
@@ -38,7 +43,7 @@ const CartCardCont = styled.div`
     }
 
     .card__img {
-        max-height: 125px;
+        max-height: 50px;
         width: auto;
         object-fit: contain;
     }
@@ -83,13 +88,6 @@ const CartCard = ({ item }: Item) => {
                 <img className="card__img" src={item.img} alt={"beer label"} />
             </div>
             <div className="card__right">
-                <p className="card__amount">Quantity: {item.amount}</p>
-                <p className="card__price">${item.price.toFixed(2)} each</p>
-                {item.amount && (
-                    <p className="card__total">
-                        Total: ${(item.amount * item.price).toFixed(2)}
-                    </p>
-                )}
                 <div className="card__btn-cont">
                     <button className="card__btn" onClick={addItemHandler}>
                         +
@@ -98,6 +96,13 @@ const CartCard = ({ item }: Item) => {
                         -
                     </button>
                 </div>
+                <p className="card__price">${item.price.toFixed(2)} each</p>
+                <p className="card__amount">Qty: {item.amount}</p>
+                {item.amount && (
+                    <p className="card__total">
+                        Total: ${(item.amount * item.price).toFixed(2)}
+                    </p>
+                )}
             </div>
         </CartCardCont>
     );

@@ -23,7 +23,7 @@ const CartCont = styled.div`
     align-items: center;
 
     .cart__modal {
-        max-height: 90%;
+        max-height: 93%;
         width: fit-content;
         min-width: 50%;
         background-color: white;
@@ -42,7 +42,10 @@ const CartCont = styled.div`
         max-height: 50%;
         display: flex;
         flex-direction: column;
-        gap: 15px;
+
+        & > :not(:last-child) {
+            border-bottom: 2px solid black;
+        }
     }
 
     .cart__checkout {
@@ -93,6 +96,18 @@ const CartCont = styled.div`
             width: 40%;
         } */
     }
+
+    .cart__details {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .cart__beers,
+    .cart__price {
+        align-self: flex-end;
+    }
+
     .cart__back-btn {
     }
 `;
@@ -162,6 +177,14 @@ const Cart = ({ onClick }: Cart) => {
                             <div className="cart__checkout">
                                 <div className="cart__section">
                                     <Button text="Close" onClick={onClick} />
+                                    {itemInCart && (
+                                        <Button
+                                            text="Clear Cart"
+                                            onClick={cartCtx.clearCart}
+                                        />
+                                    )}
+                                </div>
+                                <div className="cart__checkout-cont">
                                     {canCheckout && (
                                         <Button
                                             text="Checkout"
@@ -175,12 +198,6 @@ const Cart = ({ onClick }: Cart) => {
                                         </p>
                                     )}
                                 </div>
-                                {itemInCart && (
-                                    <Button
-                                        text="Clear Cart"
-                                        onClick={cartCtx.clearCart}
-                                    />
-                                )}
                             </div>
                         </div>
                     </>
